@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <el-card class="card3">
         <div class="div1">
             <div class="card">
                 <el-avatar :size="200" :src="this.author.avatar" class="avatar"></el-avatar>
@@ -17,7 +17,7 @@
             作者作品
         </div>
         <div>
-            <el-card v-for="art in arts" :key="art.id" class="card2">
+            <el-card v-for=" art  in  arts " :key="art.id" class="card2">
                 <div @click="showPainting(art.id)">
                     <a target="_blank">
                         <el-image style="width: 200px; height: 250px " :src="art.image"></el-image>
@@ -28,7 +28,7 @@
 
 
         </div>
-    </div>
+    </el-card>
 </template>
 
 <style>
@@ -38,7 +38,7 @@
 }
 
 .div1 {
-    background-color: rgb(23, 22, 22);
+    /* background-color: rgb(23, 22, 22); */
     width: auto;
     height: 300px;
 }
@@ -74,6 +74,17 @@
 .card-text {
     margin-top: 50px;
     font-size: 20px;
+}
+
+.card3 {
+
+    height: auto;
+    border: 1px solid #efefef;
+
+
+
+    border-radius: 20px;
+
 }
 </style>
 
