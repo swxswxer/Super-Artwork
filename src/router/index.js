@@ -4,6 +4,9 @@ import MyList from '../components/MyList'
 import Detail from '../components/Detail'
 import AuthorList from '../components/AuthorList'
 import authorDetail from '../components/authorDetail'
+import Login from '../views/loginRegister.vue'
+import Register from '../views/Register.vue'
+import HomePage from '../views/HomePage.vue'
 
 
 const originalPush = VueRouter.prototype.push
@@ -14,30 +17,62 @@ VueRouter.prototype.push = function push(location) {
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    name: 'allart',
-    path: '/allart',
-    component: MyList,
-  },
-  {
-    name: 'detail',
-    path: '/detail',
-    component: Detail
-  },
+
+
+  // {
+  //   path: '/',
+  //   redirect: '/allart'
+  // },
   {
     path: '/',
-    redirect: '/allart'
+    namee: 'Login',
+    component: Login
   },
   {
-    name: 'authorList',
-    path: '/authorList',
-    component: AuthorList
+    path: '/login',
+    namee: 'Login',
+    component: Login
   },
   {
-    name: 'authorDetail',
-    path: '/authorDetail',
-    component: authorDetail
+    path: '/register',
+    namee: 'Register',
+    component: Register
   },
+  {
+    path: '/home',
+    name: 'home',
+    component: HomePage,
+    children: [
+      {
+        path: '/',
+        component: MyList,
+      },
+      {
+        name: 'detail',
+        path: '/detail',
+        component: Detail
+      },
+      {
+        name: 'authorList',
+        path: '/authorList',
+        component: AuthorList
+      },
+      {
+        name: 'authorDetail',
+        path: '/authorDetail',
+        component: authorDetail
+      },
+
+    ]
+  },
+
+
+  // {
+  //   name: 'login',
+  //   path: '/login',
+  //   component: Login
+  // },
+
 
 
 ]

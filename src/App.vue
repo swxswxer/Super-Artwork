@@ -1,9 +1,7 @@
-<template>
+<!-- <template>
   <el-container style="height: 2000px; border: 1px solid #eee">
 
     <el-container>
-      <!-- header -->
-
       <el-header style="height: 80px;">
         <Menu></Menu>
         <Search></Search>
@@ -16,6 +14,11 @@
       </el-container>
     </el-container>
   </el-container>
+</template> -->
+<template>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <style>

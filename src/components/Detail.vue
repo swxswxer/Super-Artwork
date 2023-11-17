@@ -1,11 +1,9 @@
 <template>
     <div>
-
         <div>
             <el-card class="scroll">
                 <el-image class="image-container" :src="art.image" :preview-src-list="srcList"></el-image>
             </el-card>
-
             <el-card class="scroll2">
                 <div slot="header" class="clearfix">
                     <span style="font-size: 30px;">{{ art.name }}</span>
@@ -26,8 +24,6 @@
                 <div class="text item">{{ art.description }} </div>
             </el-card>
             <comment></comment>
-
-
         </div>
     </div>
 </template>

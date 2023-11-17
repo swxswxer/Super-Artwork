@@ -1,22 +1,22 @@
 <template>
   <div>
     <el-card class="card" v-for="art in arts" :key="art.id">
-      <div @click="showArt(art.id)">
-        <a target="_blank">
-          <el-image style="width: 200px; height: 250px " :src="art.image"></el-image>
-        </a>
-        <p class="card-text">{{ art.name }}</p>
-      </div>
+      <el-tooltip placement="top">
+        <div slot="content">画名:{{ art.name }}<br />作者:{{ art.artist }}<br />发布时间:{{ art.date }}</div>
+        <div @click="showArt(art.id)">
+          <a target="_blank">
+            <el-image style="width: 200px; height: 250px " :src="art.image"></el-image>
+          </a>
+          <p class="card-text">{{ art.name }}</p>
+        </div>
+      </el-tooltip>
     </el-card>
-
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import VueRouter from 'vue-router'
-
-
 export default {
   name: 'MyList',
   data() {
