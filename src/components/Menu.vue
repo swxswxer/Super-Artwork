@@ -22,16 +22,17 @@ export default {
         handleSelect(key) {
             console.log(key);
             if (key == 1) {
-                this.$router.push({
-                    name: 'allart',
-                })
+                // this.$router.push({
+                //     name: 'allart',
+                // })
+                this.$router.push({ path: '/home' })
                 this.$bus.$emit('zhuye')
             } else if (key == '2-1') {
                 const style = '国风'
                 // this.searchByStyle(style)
-                this.$router.push({
-                    name: 'allart',
-                })
+                // this.$router.push({
+                //     name: 'allart',
+                // })
                 this.$bus.$emit('searchByStyle', style)
             } else if (key == '2-2') {
                 const style = '水彩'

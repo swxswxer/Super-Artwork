@@ -5,8 +5,8 @@ import Detail from '../components/Detail'
 import AuthorList from '../components/AuthorList'
 import authorDetail from '../components/authorDetail'
 import Login from '../views/loginRegister.vue'
-import Register from '../views/Register.vue'
 import HomePage from '../views/HomePage.vue'
+import test from '../views/test.vue'
 
 
 const originalPush = VueRouter.prototype.push
@@ -33,11 +33,7 @@ const routes = [
     namee: 'Login',
     component: Login
   },
-  {
-    path: '/register',
-    namee: 'Register',
-    component: Register
-  },
+
   {
     path: '/home',
     name: 'home',
@@ -64,6 +60,7 @@ const routes = [
       },
 
     ]
+
   },
 
 
@@ -72,7 +69,11 @@ const routes = [
   //   path: '/login',
   //   component: Login
   // },
-
+  {
+    path: '/test',
+    name: 'test',
+    component: test
+  },
 
 
 ]

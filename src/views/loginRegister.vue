@@ -17,8 +17,8 @@
 					<div class="bform">
 						<input type="text" placeholder="用户名" v-model="form.username">
 						<span class="errTips" v-if="existed">* 用户名已经存在！ *</span>
-						<input type="email" placeholder="邮箱" v-model="form.useremail">
 						<input type="password" placeholder="密码" v-model="form.userpwd">
+						<input type="password" placeholder="确认密码" v-model="form.userpwd2">
 					</div>
 					<button class="bbutton" @click="register">注册</button>
 				</div>
@@ -47,14 +47,14 @@ export default {
 	name: 'login-register',
 	data() {
 		return {
-			isLogin: false,
+			isLogin: true,
 			emailError: false,
 			passwordError: false,
 			existed: false,
 			form: {
 				username: '',
-				// useremail: '',
-				userpwd: ''
+				userpwd: '',
+				userpwd2: ''
 			}
 		}
 	},
@@ -62,40 +62,10 @@ export default {
 		changeType() {
 			this.isLogin = !this.isLogin
 			this.form.username = ''
-			// this.form.useremail = ''
 			this.form.userpwd = ''
+			this.form.userpwd2 = ''
 		},
-		// login() {
-		// 	const self = this;
-		// 	if (self.form.username != "" && self.form.userpwd != "") {
-		// 		self.$axios({
-		// 			method: 'post',
-		// 			url: 'http://localhost:8081/users/login',
-		// 			data: {
-		// 				username: self.form.username,
-		// 				password: self.form.userpwd
-		// 			}
-		// 		})
-		// 			.then(res => {
-		// 				switch (res.data) {
-		// 					case 0:
-		// 						alert("登陆成功！");
-		// 						break;
-		// 					case -1:
-		// 						this.emailError = true;
-		// 						break;
-		// 					case 1:
-		// 						this.passwordError = true;
-		// 						break;
-		// 				}
-		// 			})
-		// 			.catch(err => {
-		// 				console.log(err);
-		// 			})
-		// 	} else {
-		// 		alert("填写不能为空！");
-		// 	}
-		// },
+
 		login() {
 			const self = this;
 			// console.log(self.form.username)
@@ -108,47 +78,48 @@ export default {
 				}
 			})
 				.then(res => {
-					// console.log(res);
+					console.log(res);
 					// console.log(res.data.data);
-					if (res.data.flag == false) {
+					if (res.data.flag === false) {
 						// console.log(res.data.data)
 						alert(res.data.data);
 					} else {
 						console.log(res.data.data);
-						this.$bus.$emit('getUser', res.data.data)
-						// alert(res.data.data);
+						const username = res.data.data
+						this.$store.dispatch('asyncUpdateUser', res.data.data)
 						this.$router.push({ path: '/home' })
 					}
 				})
 		},
+
 		register() {
+			const formData = new FormData();
 			const self = this;
-			if (self.form.username != "" && self.form.useremail != "" && self.form.userpwd != "") {
-				self.$axios({
-					method: 'post',
-					url: 'http://localhost:8081/users/login',
-					data: {
-						username: self.form.username,
-						email: self.form.useremail,
-						password: self.form.userpwd
-					}
-				})
-					.then(res => {
-						switch (res.data) {
-							case 0:
-								alert("注册成功！");
-								this.login();
-								break;
-							case -1:
-								this.existed = true;
-								break;
+			formData.append('username', self.form.username);
+			formData.append('userpwd', self.form.userpwd);
+			if (self.form.username != "" && self.form.userpwd != "" && self.form.userpwd2 != "") {
+				if (self.form.userpwd === self.form.userpwd2) {
+					axios.post('http://localhost:8081/users/register', formData, {
+						headers: {
+							'Content-Type': 'multipart/form-data'
 						}
 					})
-					.catch(err => {
-						console.log(err);
-					})
+						.then(res => {
+							if (res.data.flag === true) {
+								alert('注册成功，请返回登陆页面登陆')
+								changeType()
+							} else {
+								alert('注册失败,' + res.data.data)
+							}
+
+						})
+
+				} else {
+					alert("两次密码不一致")
+				}
 			} else {
-				alert("填写不能为空！");
+				alert("填写不能为空")
+
 			}
 		}
 	}

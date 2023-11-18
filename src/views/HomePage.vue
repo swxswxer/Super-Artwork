@@ -5,8 +5,23 @@
             <el-header style="height: 80px;">
                 <Menu></Menu>
                 <Search></Search>
+                <div>
+
+                    <el-dropdown>
+                        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                        <span>{{ user.username }}</span>
+                        <el-dropdown-menu slot="dropdown">
+
+                            <el-dropdown-item>个人信息</el-dropdown-item>
+                            <el-dropdown-item>购物车</el-dropdown-item>
+                            <el-dropdown-item>购买记录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+
+                </div>
                 <span>SuperArtwork</span>
-                <span>Hello{{ user.username }}</span>
+
+
             </el-header>
             <el-container>
                 <el-main>
@@ -22,35 +37,28 @@ import Search from '../components/Search.vue'
 import Menu from '../components/Menu.vue'
 import Aside from '../components/Aside.vue'
 import { RouterView } from 'vue-router';
+
 export default {
     data() {
         return {
-            user:
-            {
-                id: '',
-                username: '',
-                userpwd: '',
-
+            user: {
+                username: '未登陆',
+                id: 0,
             }
         }
+
+    },
+    mounted() {
+        // this.username = this.$route.query.username
+        this.user = this.$store.getters.getUser
+        // console.log(this.user.username)
     },
     components: {
         Aside,
         Search,
         Menu,
     },
-    mounted() {
 
-        this.$bus.$on('getUser', (user) => {
-            console.log(user)
-            this.user.username = user.username
-            this.user.id = user.id
-
-        })
-
-
-
-    },
 
 }
 </script>
