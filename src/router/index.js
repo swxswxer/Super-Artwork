@@ -6,7 +6,7 @@ import AuthorList from '../components/AuthorList'
 import authorDetail from '../components/authorDetail'
 import Login from '../views/loginRegister.vue'
 import HomePage from '../views/HomePage.vue'
-import test from '../views/test.vue'
+
 
 
 const originalPush = VueRouter.prototype.push
@@ -61,18 +61,6 @@ const routes = [
 
     ]
 
-  },
-
-
-  // {
-  //   name: 'login',
-  //   path: '/login',
-  //   component: Login
-  // },
-  {
-    path: '/test',
-    name: 'test',
-    component: test
   },
 
 
