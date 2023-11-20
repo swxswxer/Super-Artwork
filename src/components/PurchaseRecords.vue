@@ -1,5 +1,6 @@
 <template>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table max-height="500" min-height="500" :data="tableData" :default-sort="{ prop: 'date', order: 'descending' }"
+        style="width: 100%">
         <el-table-column type="expand">
             <template slot-scope="props">
                 <el-form label-position="left" inline class="demo-table-expand">
@@ -27,11 +28,12 @@
                 </el-form>
             </template>
         </el-table-column>
+
         <el-table-column label="画作 ID" prop="paintingId">
         </el-table-column>
         <el-table-column label="画作名称" prop="paintingName">
         </el-table-column>
-        <el-table-column label="描述" prop="description">
+        <el-table-column sortable label="购买日期" prop="date">
         </el-table-column>
     </el-table>
 </template>
@@ -44,15 +46,7 @@ export default {
 
             ],
             tableData: [
-                {
-                    // id: 0,
-                    // paintingId: 0,
-                    // paintingName: '',
-                    // description: '',
-                    // price: 0,
-                    // style: '',
-                    // artist: '',
-                }
+
             ],
             arts: [
 
@@ -61,8 +55,8 @@ export default {
         }
     },
     mounted() {
-        // const id = this.$store.getters.getUser.id
-        const id = 1
+        const id = this.$cookies.get('userId')
+        // const id = 1
         this.getRecordingByUserId(id)
 
 
@@ -79,7 +73,7 @@ export default {
                 }
             })
                 .then(res => {
-                    // console.log(res.data.data);
+                    console.log(res.data.data);
                     this.resData = res.data.data
                     // console.log(this.resData)
 
@@ -88,10 +82,16 @@ export default {
                         axios.get(`http://localhost:8081/painting/${item.paintingId}`).then(res => {
                             // console.log(res.data.data);
                             // this.arts.push(res.data.data)
-                            console.log(index)
                             // this.tableData[index].paintingId = res.data.data.id
                             this.tableData.push({
-                                paintingId: res.data.data.id
+                                paintingId: res.data.data.id,
+                                paintingName: res.data.data.name,
+                                description: res.data.data.description,
+                                price: 1000,
+                                style: res.data.data.style,
+                                artist: res.data.data.artist,
+                                id: item.id,
+                                date: item.date
 
                             })
                             // console.log(this.tableData[index])

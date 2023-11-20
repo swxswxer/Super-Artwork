@@ -27,7 +27,7 @@
             <Information></Information>
         </el-dialog>
         <el-dialog title="购买记录" :visible.sync="PRVisible">
-            <PurchaseRecords></PurchaseRecords>
+            <PurchaseRecords v-if="tableShow"></PurchaseRecords>
         </el-dialog>
 
     </el-container>
@@ -39,6 +39,7 @@ import Aside from '../components/Aside.vue';
 import Information from '../components/Information.vue';
 import PurchaseRecords from '../components/PurchaseRecords.vue';
 import { RouterView } from 'vue-router';
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -48,6 +49,7 @@ export default {
             },
             infoVisible: false,
             PRVisible: false,
+            tableShow: true,
         }
     },
     methods: {
@@ -58,16 +60,37 @@ export default {
                 this.infoVisible = true
             } else if (command === 'pr') {
                 this.PRVisible = true
+                this.updateTable()
             }
 
         },
         logout() {
             this.$router.push('/')
-        }
+            this.$cookies.remove('userId');
+        },
+        updateTable() {
+            // 卸载
+            this.tableShow = false
+            // 建议加上 nextTick 微任务 
+            // 否则在同一事件内同时将tableShow设置false和true有可能导致组件渲染失败
+            this.$nextTick(function () {
+                // 加载
+                this.tableShow = true
+            })
+        },
     },
     mounted() {
         // this.username = this.$route.query.username
-        this.user = this.$store.getters.getUser
+        // this.user = this.$store.getters.getUser
+
+        this.user.id = this.$cookies.get('userId')
+
+        axios.get(`http://localhost:8081/users/${this.user.id}`).then(res => {
+
+            // console.log(res);
+            this.user.username = res.data.data.username
+            // console.log(res.data.data)
+        })
         // console.log(this.user.username)
     },
     components: {

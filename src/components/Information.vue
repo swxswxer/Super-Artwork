@@ -7,8 +7,8 @@
             <el-button v-if="IsUpdata" type="primary" size="small" @click="save">保存</el-button>
         </template>
         <el-descriptions-item label="用户名">
-            <div v-if="IsDisplay">{{ user.username }}</div>
-            <el-input v-if="IsUpdata" v-model="user.username"></el-input>
+            <div>{{ user.username }}</div>
+            <!-- <el-input v-if="IsUpdata" v-model="user.username"></el-input> -->
         </el-descriptions-item>
         <el-descriptions-item label="手机号">
             <div v-if="IsDisplay">{{ user.phoneNumber }}</div>
@@ -84,7 +84,7 @@ export default {
 
     },
     mounted() {
-        axios.get(`http://localhost:8081/users/${this.$store.getters.getUser.id}`).then(res => {
+        axios.get(`http://localhost:8081/users/${this.$cookies.get('userId')}`).then(res => {
 
             console.log(res.data.data);
             this.user = res.data.data

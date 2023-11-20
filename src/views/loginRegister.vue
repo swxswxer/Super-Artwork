@@ -86,6 +86,7 @@ export default {
 					} else {
 						console.log(res.data.data);
 						const username = res.data.data
+						this.$cookies.set('userId', res.data.data.id)
 						this.$store.dispatch('asyncUpdateUser', res.data.data)
 						this.$router.push({ path: '/home' })
 					}
